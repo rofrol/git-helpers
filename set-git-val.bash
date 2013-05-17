@@ -1,9 +1,9 @@
 #!/bin/bash
 #http://stackoverflow.com/questions/9660608/how-can-i-check-if-a-directory-is-on-the-path-in-bash
 
-#wget -q -O - "https://raw.github.com/rofrol/git-helpers/master/set-get-val.bash" | bash
+#wget -q -O - "https://raw.github.com/rofrol/git-helpers/master/set-git-val.bash" | bash && . ~/.bashrc
 #or
-#curl "https://raw.github.com/rofrol/git-helpers/master/set-get-val.bash" | bash
+#curl "https://raw.github.com/rofrol/git-helpers/master/set-git-val.bash" | bash && . ~/.bashrc
 
 #testing:
 #export PATH="/bin:/usr/bin" && export HOME=/home/r.frolow/tmphome && curl https://raw.github.com/rofrol/git-helpers/master/set-git-val.bash | bash && . ~/.bashrc
