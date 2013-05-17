@@ -6,17 +6,18 @@
 #curl "https://raw.github.com/rofrol/git-helpers/master/set-get-val.bash" | bash
 
 #testing:
-#PATH="/bin:/usr/bin" HOME=~/tmphome /bin/bash set-git-val.bash
-home_bin=$HOME/bin
+#export PATH="/bin:/usr/bin" && export HOME=/home/r.frolow/tmphome && curl https://raw.github.com/rofrol/git-helpers/master/set-git-val.bash | bash && . ~/.bashrc
+dir=$HOME/bin
+echo $dir
 
-if [ ! -d "$home_bin" ]; then
-    echo "creating dir $home_bin"
-    mkdir $home_bin
+if [ ! -d "$dir" ]; then
+    echo "creating dir $dir"
+    mkdir $dir
 fi
 
-if [[ :$PATH: != *:"$home_bin":* ]] ; then
+if [[ :$PATH: != *:"$dir":* ]] ; then
     echo "adding \$HOME/bin to \$PATH"
     echo "PATH=\$PATH:\$HOME/bin" >> ~/.bashrc
 fi
 
-cd $home_bin && wget https://raw.github.com/rofrol/git-helpers/master/git-val && chmod +x $home_bin/git-val
+cd $dir && wget https://raw.github.com/rofrol/git-helpers/master/git-val && chmod +x $dir/git-val
