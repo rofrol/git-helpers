@@ -1,0 +1,8 @@
+#!/bin/sh
+#http://stackoverflow.com/a/6719718/588759
+#http://stackoverflow.com/a/4522043/588759
+#http://unix.stackexchange.com/a/41751/37431
+#http://stackoverflow.com/a/4448922/588759
+#http://adamkasza.wordpress.com/2009/04/10/determining-the-parent-directory-from-bash/
+prefix=$(basename `dirname $PWD`)/$(basename `pwd`)/
+git diff-tree --no-commit-id --name-only -r $1 | grep $prefix | sed "s@$prefix@@g" | xargs ~/ctc/verification/validate-js.py | sed '/^$/N;/^\n$/D' | sed '1{/^$/d}' | sed '${/^$/d;}'
