@@ -7,7 +7,7 @@
 
 #testing:
 #PATH="/bin:/usr/bin" HOME=~/tmphome /bin/bash set-git-val.bash
-home_bin=$HOME/bin2
+home_bin=$HOME/bin
 
 if [ ! -d "$home_bin" ]; then
     echo "creating dir $home_bin"
