@@ -4,7 +4,10 @@
 #wget -q -O - "https://raw.github.com/rofrol/git-helpers/master/set-get-val.bash" | bash
 #or
 #curl "https://raw.github.com/rofrol/git-helpers/master/set-get-val.bash" | bash
-home_bin=$HOME/bin
+
+#testing:
+#PATH="/bin:/usr/bin" HOME=~/tmphome /bin/bash set-git-val.bash
+home_bin=$HOME/bin2
 
 if [ ! -d "$home_bin" ]; then
     echo "creating dir $home_bin"
