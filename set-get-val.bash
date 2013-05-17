@@ -3,12 +3,13 @@
 home_bin=$HOME/bin
 
 if [ ! -d "$home_bin" ]; then
+    echo "creating dir $home_bin"
     mkdir $home_bin
 fi
 
 if [[ :$PATH: != *:"$home_bin":* ]] ; then
+    echo "adding \$HOME/bin to \$PATH"
     echo "PATH=$PATH:$HOME/bin" > ~/.bashrc
 fi
 
-#cd $home_bin && wget https://raw.github.com/rofrol/git-helpers/master/get-val && chmod +x $home_bin/git-val
-cp git-val $home_bin && chmod +x $home_bin/git-val
+cd $home_bin && wget https://raw.github.com/rofrol/git-helpers/master/get-val && chmod +x $home_bin/git-val
