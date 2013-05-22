@@ -1,0 +1,12 @@
+#!/bin/bash
+tests=`git diff-tree --no-commit-id --name-only -r HEAD | grep -E "*\.html" | sed -E 's@.*/(.*)\.html@\1@g'`
+if [[ $tests == "" ]] ;then exit 0; fi
+echo $tests | tr " " "\n"
+
+read -p "Those tests will be installed. Are you sure? [y] " -n 1
+echo ""
+if [[ ! $REPLY =~ ^[y]$ ]]
+then
+    exit 1
+fi
+~/ctc/installCTC.sh run --id $tests
