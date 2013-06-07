@@ -9,4 +9,4 @@ if [[ ! $REPLY =~ ^[y]$ ]]
 then
     exit 1
 fi
-~/ctc/installCTC.sh run --id $tests
+SIGN=1 ~/ctc/installCTC.sh run --id $tests
