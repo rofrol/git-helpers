@@ -1,5 +1,8 @@
 #!/bin/bash
-tests=`git diff-tree --no-commit-id --name-only --diff-filter="[A|C|M|R]" -r HEAD | grep -E "*\.html" | sed -E 's@.*/(.*)\.html@\1@g'`
+rev=$1
+[ -z "$rev" ] && rev="HEAD"
+
+tests=`git diff-tree --no-commit-id --name-only --diff-filter="[A|C|M|R]" -r $rev | grep -E "*\.html" | sed -E 's@.*/(.*)\.html@\1@g'`
 if [[ $tests == "" ]] ;then exit 0; fi
 echo $tests | tr " " "\n"
 
