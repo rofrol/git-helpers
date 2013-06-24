@@ -50,13 +50,13 @@ fi
 #exec git diff-index --check --cached $against --
 if test "$(git -c core.whitespace=tab-in-indent diff-index --check --cached $against --)"
 then
-    git diff-index --check --cached $against --
+    git -c color.diff=always diff-index --check --cached $against --
     exit 1
 fi
 
 #http://stackoverflow.com/a/5578165/588759
-if test "$(git -c core.whitespace=tab-in-indent diff --check)"
+if test "$(git -c core.whitespace=tab-in-indent diff --cached --check)"
 then
-    git -c core.whitespace=tab-in-indent diff --check
+    git -c color.diff=always -c core.whitespace=tab-in-indent diff --cached --check
     exit 1
 fi
