@@ -1,0 +1,16 @@
+#!/bin/bash
+#http://stackoverflow.com/a/10325316/588759
+#http://stackoverflow.com/a/13509762/588759
+#https://gist.github.com/robwierzbowski/5430952
+user=$(echo ${1} | tr -d ' ')
+repo=$(echo ${2} | tr -d ' ')
+echo ${user}
+echo ${repo}
+[ -z "$user" ] && echo "user empty!" && exit 1
+[ -z "$repo" ] && echo "repo empty!" && exit 1
+curl -u ${user} https://api.github.com/user/repos -d "{\"name\":\"${repo}\"}"
+git remote add origin https://github.com/${user}/${repo}.git
+echo "if origin exist"
+echo "git remote set-url origin https://github.com/${user}/${repo}.git"
+echo "Maybe you have to wait a little before push works."
+git push -u origin master
