@@ -19,6 +19,11 @@ fi
 
 prev_branch=$(git symbolic-ref -q HEAD --short)
 
+if [ "${prev_branch}" == "${branch}" ]; then
+	echo "Cannot merge with itself. Exiting"
+	exit 1;
+fi	
+
 git fetch ${remote} ${branch}:${branch}
 git rebase ${branch} && \
 git checkout ${branch}  && \
