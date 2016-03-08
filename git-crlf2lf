@@ -1,0 +1,12 @@
+
+git filter-branch -f --prune-empty --tree-filter 'git grep -z -I --name-only --untracked -e . -z | xargs -0 -n 1 dos2unix' -- --all
+
+# Uses this to filter files that git treats as binary http://stackoverflow.com/questions/6119956/how-to-determine-if-git-handles-a-file-as-binary-or-as-text/16049363#16049363
+# if no dos2unix use perl or sed http://www.microhowto.info/howto/convert_the_line_endings_in_a_text_file_from_dos_to_unix_format.html
+
+# Other links
+# http://stackoverflow.com/questions/2466959/git-removing-carriage-returns-from-source-controlled-files
+# http://stackoverflow.com/questions/1011985/line-endings-messed-up-in-git-how-to-track-changes-from-another-branch-after-a
+# http://superuser.com/questions/293941/rewrite-git-history-to-replace-all-crlf-to-lf
+# https://gist.github.com/richfitz/72ac6cd41c2b531a89f1
+# https://github.com/JamesMGreene/node-dos2unix
