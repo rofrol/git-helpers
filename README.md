@@ -17,3 +17,9 @@ Some git helper scripts for workflow
 ## Stash changes, checkout, stash pop
 
 `git c <ref>`
+
+## To make script executable under windows (--add when it's a new file)
+
+`git update-index --add --chmod=+x <file>`
+
+http://stackoverflow.com/questions/6476513/git-file-permissions-on-windows
