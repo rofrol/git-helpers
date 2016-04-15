@@ -32,6 +32,8 @@ git fetch ${remote} ${branch}:${branch} && \
 git rebase ${branch} && \
 # merge branch without checkout [2]
 git fetch . ${prev_branch}:${branch} && \
+read -p "git push ${remote} ${branch}? [y] " -n 1 -r && \
+[[ $REPLY =~ ^[Yy]$ ]] && \
 git push ${remote} ${branch} && \
 read -p "Delete branch '${prev_branch}'? [y] " -n 1 -r && \
 [[ $REPLY =~ ^[Yy]$ ]] && \
