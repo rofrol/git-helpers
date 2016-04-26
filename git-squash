@@ -1,0 +1,28 @@
+#!/bin/sh -e
+
+if [ -z ${1} ]; then
+	echo "Script to squash commits"
+	echo -e "\nUsage:"
+	echo "  git squash <rev>"
+
+	exit 1;
+fi
+
+rev="${1}"
+
+ref=$(git symbolic-ref -q HEAD --short)
+ref_u="${ref}.unsquashed"
+ref_s="${ref}.squashed"
+
+msg=$(git log --pretty=format:'%B' "${rev}..${ref}" | tail -n 1)
+
+git checkout -b "${ref_s} "${rev}"
+git merge --squash "${ref}"
+git commit -m "${msg}"
+git branch -m "${ref}" "${ref_u}
+git branch -m "${ref}"
+
+read -p "Delete ${ref_u} branch? [y] " -n 1 -r && \
+[[ $REPLY =~ ^[Yy]$ ]] && \
+echo && \
+git branch -D "${ref_u}
