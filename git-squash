@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+################################################################################
+# INPUT
+################################################################################
+
 if [ -z ${1} ]; then
 	echo "Script to squash commits"
 	echo -e "\nUsage:"
@@ -8,21 +12,39 @@ if [ -z ${1} ]; then
 	exit 1;
 fi
 
-rev="${1}"
 
+rev="${1}"
 ref=$(git symbolic-ref -q HEAD --short)
 ref_u="${ref}.unsquashed"
 ref_s="${ref}.squashed"
-
 msg=$(git log --pretty=format:'%B' "${rev}..${ref}" | tail -n 1)
 
-git checkout -b "${ref_s} "${rev}"
-git merge --squash "${ref}"
+################################################################################
+# DEBUG
+################################################################################
+
+if [ "$GIT_SQUASH_DEBUG" == 1 ]; then
+	echo "ref=${ref}"
+	echo "ref_u=${ref_u}"
+	echo "ref_s=${ref_s}"
+	echo "msg=${msg}"
+
+	read -p "Proceed? [y] " -n 1 -r && \
+	[[ ! $REPLY =~ ^[Yy]$ ]] && \
+	exit 1
+fi
+
+################################################################################
+# PROCESSING
+################################################################################
+
+git checkout -b "${ref_s}" "${rev}"
+git merge --ff --squash "${ref}"
 git commit -m "${msg}"
-git branch -m "${ref}" "${ref_u}
+git branch -m "${ref}" "${ref_u}"
 git branch -m "${ref}"
 
 read -p "Delete ${ref_u} branch? [y] " -n 1 -r && \
 [[ $REPLY =~ ^[Yy]$ ]] && \
 echo && \
-git branch -D "${ref_u}
+git branch -D "${ref_u}"
