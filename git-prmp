@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function usage() {
+    echo
+    echo prmp means: pull, rebase, merge, push.
+    echo
+    echo Easy merging and push to branch_to_merge_on without switching branches
+    echo Save this script as git-prmp in some directory added to env variable \$PATH.
+    echo "Usage: git prmp <branch_to_merge_on>"
+    echo
+}
+
+branch_to_merge_on="$1"
+
+if [ -z "$branch_to_merge_on" ]; then
+    echo "Provide branch to merge on"
+    usage
+fi
+
+echo "Merging on $branch_to_merge_on"
+
+git fetch -f origin ${branch_to_merge_on}:${branch_to_merge_on}
+git rebase ${branch_to_merge_on}
+git fetch . HEAD:${branch_to_merge_on}
+git push origin ${branch_to_merge_on}
+
+# If push is rejected, it means someone update origin/${branch_to_merge_on} in the meantime.
+# You have to repeat above commands.
+# - http://stackoverflow.com/questions/3216360/merge-update-and-pull-git-branches-without-using-checkouts
+# - http://stackoverflow.com/questions/8676903/git-how-to-push-without-checking-out
