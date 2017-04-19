@@ -1,0 +1,4 @@
+#!/bin/bash
+
+days="$1"
+git --no-pager log --abbrev-commit --format=format:'- %ad %s -- %ae' --date=format:%Y-%m-%d --since="${days} days ago"
