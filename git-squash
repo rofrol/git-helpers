@@ -1,50 +1,12 @@
-#!/bin/sh -e
+#!/bin/bash
 
-################################################################################
-# INPUT
-################################################################################
-
-if [ -z ${1} ]; then
-	echo "Script to squash commits"
-	echo -e "\nUsage:"
-	echo "  git squash <rev>"
-
-	exit 1;
+REV="$1"
+if [ -z "$REV" ]; then
+  echo "Provide branch name/revision"
+  exit 1
 fi
 
-
-rev="${1}"
-ref=$(git symbolic-ref -q HEAD --short)
-ref_u="${ref}.unsquashed"
-ref_s="${ref}.squashed"
-msg=$(git log --pretty=format:'%B' "${rev}..${ref}" | tail -n 1)
-
-################################################################################
-# DEBUG
-################################################################################
-
-if [ "$GIT_SQUASH_DEBUG" == 1 ]; then
-	echo "ref=${ref}"
-	echo "ref_u=${ref_u}"
-	echo "ref_s=${ref_s}"
-	echo "msg=${msg}"
-
-	read -p "Proceed? [y] " -n 1 -r && \
-	[[ ! $REPLY =~ ^[Yy]$ ]] && \
-	exit 1
-fi
-
-################################################################################
-# PROCESSING
-################################################################################
-
-git checkout -b "${ref_s}" "${rev}"
-git merge --ff --squash "${ref}"
-git commit -m "${msg}"
-
-read -p "Remove unsquashed branch? [y] " -n 1 -r && \
-[[ $REPLY =~ ^[Yy]$ ]] && \
-echo && \
-git checkout "${ref}"
-git reset --hard "${ref_s}"
-git branch -D "${ref_s}"
+FORK_POINT=$(git merge-base --fork-point $REV)
+FIRST_COMMIT=$(git child $FORK_POINT)
+COMMIT_MESSAGE=$(git log -n 1 --pretty=format:'%s' $FIRST_COMMIT)
+git reset --hard "$REV" && git merge --squash HEAD@{1} && git commit -m "$COMMIT_MESSAGE"

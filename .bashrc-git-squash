@@ -1,0 +1,4 @@
+_git_squash() 
+{
+    _git_reset
+}
